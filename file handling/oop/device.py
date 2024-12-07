@@ -1,4 +1,4 @@
-
+# Activity 1: Device and Smartphone Classes
 class Device:
     """
     Base class representing a general electronic device.
@@ -58,24 +58,57 @@ class Smartphone(Device):
                 f"Battery: {self.battery_capacity} mAh")
 
 
-# Example Usage
-# Creating objects for testing purposes
-device = Device("GenericBrand", "ModelX", 299.99)
-smartphone = Smartphone("TechBrand", "SuperPhone", 999.99, "Android", 108, 5000)
+# Activity 2: Vehicles with Polymorphism
+class Vehicle:
+    """
+    Base class for vehicles.
+    """
+    def move(self):
+        """
+        Placeholder method for movement. 
+        To be overridden in derived classes.
+        """
+        raise NotImplementedError("Subclasses must override the move() method.")
 
-# Test Encapsulation
-device.set_price(350)
-device.set_price(-20)  # Invalid price
 
-# Display details of each object
-device_details = device.display_details()
-smartphone_details = smartphone.display_details()
+class Car(Vehicle):
+    """
+    A car moves by driving.
+    """
+    def move(self):
+        return "Driving 🚗"
 
-# Smartphone specific features
-photo_action = smartphone.take_photo()
-app_installation = smartphone.install_app("ChatGPT")
 
-print(device_details)
-print(smartphone_details)
-print(photo_action)
-print(app_installation)
+class Plane(Vehicle):
+    """
+    A plane moves by flying.
+    """
+    def move(self):
+        return "Flying ✈️"
+
+
+class Boat(Vehicle):
+    """
+    A boat moves by sailing.
+    """
+    def move(self):
+        return "Sailing 🛥️"
+
+
+# Combined Execution
+if __name__ == "__main__":
+    # Activity 1: Device and Smartphone Example
+    device = Device("GenericBrand", "ModelX", 299.99)
+    smartphone = Smartphone("TechBrand", "SuperPhone", 999.99, "Android", 108, 5000)
+
+    device.set_price(350)
+    print(device.display_details())
+    print(smartphone.display_details())
+    print(smartphone.take_photo())
+    print(smartphone.install_app("ChatGPT"))
+
+    print("\n--- Polymorphism with Vehicles ---")
+    # Activity 2: Polymorphism with Vehicles
+    vehicles = [Car(), Plane(), Boat()]
+    for vehicle in vehicles:
+        print(vehicle.move())
