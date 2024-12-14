@@ -1,0 +1,92 @@
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_iris
+
+# Task 1: Load and Explore the Dataset
+try:
+    # Load the Iris dataset
+    iris = load_iris()
+
+    # Convert to a pandas DataFrame
+    iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+    # Add the target (species) as a categorical column
+    iris_df['species'] = pd.Categorical.from_codes(iris.target, iris.target_names)
+
+    # Display the first few rows
+    print("First 5 rows of the dataset:")
+    print(iris_df.head())
+
+    # Explore the structure of the dataset
+    print("\nDataset Information:")
+    iris_df.info()
+
+    # Check for missing values
+    print("\nMissing Values:")
+    print(iris_df.isnull().sum())
+
+except Exception as e:
+    print(f"An error occurred while loading the dataset: {e}")
+
+# Task 2: Basic Data Analysis
+try:
+    # Descriptive statistics for numerical columns
+    print("\nDescriptive Statistics:")
+    print(iris_df.describe())
+
+    # Grouping and calculating means by species
+    grouped_means = iris_df.groupby('species').mean()
+    print("\nGrouped Means by Species:")
+    print(grouped_means)
+
+    # Observations
+    print("\nObservations:")
+    print("- Virginica species has the largest average sepal length and petal width.")
+    print("- Setosa species has significantly smaller petal dimensions compared to others.")
+
+except Exception as e:
+    print(f"An error occurred during analysis: {e}")
+
+# Task 3: Data Visualization
+try:
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(12, 8))
+
+    # Line Chart: Simulating trends over time by introducing a synthetic time variable
+    iris_df['time'] = range(1, len(iris_df) + 1)
+    plt.subplot(2, 2, 1)
+    sns.lineplot(x='time', y='sepal length (cm)', hue='species', data=iris_df, marker="o")
+    plt.title("Sepal Length Over Time")
+    plt.xlabel("Time")
+    plt.ylabel("Sepal Length (cm)")
+
+    # Bar Chart: Average Sepal Length by Species
+    plt.subplot(2, 2, 2)
+    sns.barplot(x='species', y='sepal length (cm)', data=iris_df, ci=None, palette="viridis")
+    plt.title("Average Sepal Length by Species")
+    plt.xlabel("Species")
+    plt.ylabel("Average Sepal Length (cm)")
+
+    # Histogram: Distribution of Petal Length
+    plt.subplot(2, 2, 3)
+    sns.histplot(iris_df['petal length (cm)'], kde=True, bins=15, color="skyblue")
+    plt.title("Distribution of Petal Length")
+    plt.xlabel("Petal Length (cm)")
+    plt.ylabel("Frequency")
+
+    # Scatter Plot: Sepal Length vs Petal Width
+    plt.subplot(2, 2, 4)
+    sns.scatterplot(x='sepal length (cm)', y='petal width (cm)', hue='species', data=iris_df, palette="deep")
+    plt.title("Sepal Length vs Petal Width")
+    plt.xlabel("Sepal Length (cm)")
+    plt.ylabel("Petal Width (cm)")
+
+    # Adjust layout and show the plots
+    plt.tight_layout()
+    plt.show()
+
+except Exception as e:
+    print(f"An error occurred during visualization: {e}")
